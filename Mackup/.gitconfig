@@ -165,6 +165,10 @@
 	default = matching
 	# Make `git push` push relevant annotated tags when pushing branches out.
 	followTags = true
+	
+[user]
+	email = rad22684@gmail.com
+	name = Richard Davenport
 
 # URL shorthands
 
@@ -185,5 +189,3 @@
 	pushInsteadOf = "git://gist.github.com/"
 
 [url "git://gist.github.com/"]
-
-	insteadOf = "gist:"
