@@ -9,7 +9,7 @@ tap "homebrew/versions"
 cask "java"
 cask "xquartz"
 brew "ack"
-brew “antigen”
+brew "antigen"
 brew "autoconf"
 brew "automake"
 brew "cmake"
