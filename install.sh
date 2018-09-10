@@ -32,7 +32,7 @@ chsh -s $(which zsh)
 
 # Symlink the Mackup config file to the home directory
 rm -rf $HOME/.mackup.cfg
-ln -s $HOME/.files/.mackup.cfg $HOME/.mackup.cfg
+ln -s $HOME/.files/Mackup/.mackup.cfg $HOME/.mackup.cfg
 
 # Run restore application settings
 mackup restore
