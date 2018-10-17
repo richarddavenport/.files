@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Symlink the Mackup config file to the home directory
 rm -rf $HOME/.mackup.cfg
