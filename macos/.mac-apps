@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#! /usr/bin/env zsh
 
 ###############################################################################
 # Address Book, Dashboard, iCal, TextEdit, and Disk Utility                   #

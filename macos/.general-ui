@@ -1,14 +1,14 @@
-#!/usr/bin/env bash
+#! /usr/bin/env zsh
 
 ###############################################################################
 # General UI/UX                                                               #
 ###############################################################################
 
 # Set computer name (as done via System Preferences → Sharing)
-sudo scutil --set ComputerName "radbook"
-sudo scutil --set HostName "radbook"
-sudo scutil --set LocalHostName "radbook"
-sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "radbook"
+# sudo scutil --set ComputerName "US102774MAC"
+# sudo scutil --set HostName "US102774MAC"
+# sudo scutil --set LocalHostName "US102774MAC"
+# sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "US102774MAC"
 
 # Set standby delay to 24 hours (default is 1 hour)
 sudo pmset -a standbydelay 86400

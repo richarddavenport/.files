@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#! /usr/bin/env zsh
 
 # Symlink the Mackup config file to the home directory
 rm -rf $HOME/.mackup.cfg

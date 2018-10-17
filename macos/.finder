@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#! /usr/bin/env zsh
 
 ###############################################################################
 # Finder                                                                      #
@@ -114,5 +114,5 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict \
 # Auto hide menu bar
 defaults write NSGlobalDomain _HIHideMenuBar -bool true
 
-# Need to figure out how to update 
+# Need to figure out how to update
 # com.apple.finder StandardViewSettings ExtendedListViewSettings calculateAllSizes = 1
