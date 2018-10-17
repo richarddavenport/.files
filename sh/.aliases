@@ -11,7 +11,7 @@ alias -- -="cd -"
 # Shortcuts
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
-alias p="cd ~/projects"
+alias co="cd ~/code"
 alias g="git"
 
 # Detect which `ls` flavor is in use
@@ -148,3 +148,10 @@ alias reload="exec ${SHELL} -l"
 
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
+
+# Homebrew junk
+alias bri='brew install '
+alias brs='brew search '
+alias bru='brew uninstall '
+alias bci='brew cask install '
+alias bcz='brew cask zap '

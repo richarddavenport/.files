@@ -1,0 +1,8 @@
+[{
+    "key": "shift+cmd+m",
+    "command": "markdown.showPreview",
+    "when": "!terminalFocus"
+}, {
+    "key": "ctrl+alt+y",
+    "command": "settings.cycle.codeLens"
+}]

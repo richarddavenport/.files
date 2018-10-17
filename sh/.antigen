@@ -1,9 +1,6 @@
 #!/usr/bin/env zsh
 
 source /usr/local/share/antigen/antigen.zsh
-POWERLEVEL9K_INSTALLATION_PATH=$ANTIGEN_BUNDLES/bhilburn/powerlevel9k
-POWERLEVEL9K_MODE='nerdfont-complete'
-
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
 
@@ -18,11 +15,16 @@ antigen bundle battery
 # Syntax highlighting bundle.
 antigen bundle zsh-users/zsh-syntax-highlighting
 
+# NVM
+antigen bundle lukechilds/zsh-nvm
+
 antigen bundle unixorn/tumult.plugin.zsh
 antigen bundle rmrs/firebase-zsh
 
+POWERLEVEL9K_INSTALLATION_PATH=$ANTIGEN_BUNDLES/bhilburn/powerlevel9k
+POWERLEVEL9K_MODE='nerdfont-complete'
 # Load the theme.
-# antigen theme agnoster
+antigen theme bhilburn/powerlevel9k powerlevel9k
 
 # Tell Antigen that you're done.
 antigen apply
