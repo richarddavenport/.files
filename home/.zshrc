@@ -209,6 +209,7 @@ antibody bundle caarlos0/zsh-git-fetch-merge kind:path
 antibody bundle caarlos0/zsh-git-sync kind:path
 antibody bundle caarlos0/zsh-mkc
 antibody bundle caarlos0/zsh-open-pr kind:path
+antibody bundle lukechilds/zsh-nvm
 antibody bundle mafredri/zsh-async
 antibody bundle rupa/z
 antibody bundle zsh-users/zsh-completions
