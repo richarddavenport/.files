@@ -203,7 +203,20 @@ alias bdump='brew bundle dump --global --force'
 # ##############################################################################
 
 source <(antibody init)
-antibody bundle < ~/.zsh_plugins.txt
+# this block is in alphabetic order
+antibody bundle caarlos0/ports kind:path
+antibody bundle caarlos0/zsh-git-fetch-merge kind:path
+antibody bundle caarlos0/zsh-git-sync kind:path
+antibody bundle caarlos0/zsh-mkc
+antibody bundle caarlos0/zsh-open-pr kind:path
+antibody bundle mafredri/zsh-async
+antibody bundle rupa/z
+antibody bundle zsh-users/zsh-completions
+antibody bundle zsh-users/zsh-autosuggestions
+# these should be at last!
+antibody bundle sindresorhus/pure
+antibody bundle zsh-users/zsh-syntax-highlighting
+
 antibody bundle denysdovhan/spaceship-prompt
 
 ###############################################################################
