@@ -7,6 +7,9 @@
 # aliases                                                                     #
 ###############################################################################
 
+# Setup symlinks
+alias dotfiles='\gcp -afrs ~/.files/home/.* ~'
+
 # Easier navigation: .., ..., ...., ....., ~ and -
 alias ..="cd .."
 alias ...="cd ../.."
@@ -162,60 +165,50 @@ alias brs='brew search '
 alias bru='brew uninstall '
 alias bci='brew cask install '
 alias bcz='brew cask zap '
+alias bdump='brew bundle dump --global --force'
 
-###############################################################################
-# antigen                                                                     #
-###############################################################################
+# ##############################################################################
+# antigen                                                                      #
+# ##############################################################################
 
-source /usr/local/share/antigen/antigen.zsh
+# source /usr/local/share/antigen/antigen.zsh
 
-# Load the oh-my-zsh's library.
-antigen use oh-my-zsh
+# # Load the oh-my-zsh's library.
+# antigen use oh-my-zsh
 
-# Bundles from the default repo (robbyrussell's oh-my-zsh).
-antigen bundle git
-antigen bundle command-not-found
-antigen bundle battery
+# # Bundles from the default repo (robbyrussell's oh-my-zsh).
+# antigen bundle git
+# antigen bundle command-not-found
+# antigen bundle battery
 
-# Syntax highlighting bundle.
-antigen bundle zsh-users/zsh-syntax-highlighting
+# # Syntax highlighting bundle.
+# antigen bundle zsh-users/zsh-syntax-highlighting
 
-# NVM
-antigen bundle lukechilds/zsh-nvm
+# # NVM
+# antigen bundle lukechilds/zsh-nvm
 
-antigen bundle unixorn/tumult.plugin.zsh
-antigen bundle rmrs/firebase-zsh
+# antigen bundle unixorn/tumult.plugin.zsh
+# antigen bundle rmrs/firebase-zsh
 
-POWERLEVEL9K_INSTALLATION_PATH=$ANTIGEN_BUNDLES/bhilburn/powerlevel9k
-POWERLEVEL9K_MODE='nerdfont-complete'
-# Load the theme.
-antigen theme bhilburn/powerlevel9k powerlevel9k
+# POWERLEVEL9K_INSTALLATION_PATH=$ANTIGEN_BUNDLES/bhilburn/powerlevel9k
+# POWERLEVEL9K_MODE='nerdfont-complete'
+# # Load the theme.
+# antigen theme bhilburn/powerlevel9k powerlevel9k
 
-# Tell Antigen that you're done.
-antigen apply
+# # Tell Antigen that you're done.
+# antigen apply
+
+# ##############################################################################
+# antibody                                                                     #
+# ##############################################################################
+
+source <(antibody init)
+antibody bundle < ~/.zsh_plugins.txt
+antibody bundle denysdovhan/spaceship-prompt
 
 ###############################################################################
 # exports                                                                     #
 ###############################################################################
-
-export PATH=${PATH}:~/.bin
-export PATH=${PATH}:/usr/local/bin
-export PATH=${PATH}:/opt/local/bin
-export PATH=${PATH}:/opt/local/sbin
-export PATH=${PATH}:/Users/richarddavenport/.npm-packages/bin
-export PATH=${PATH}:/usr/local/bin
-export PATH=${PATH}:/usr/bin:/bin
-export PATH=${PATH}:/usr/sbin
-export PATH=${PATH}:/sbin
-export PATH=${PATH}:/opt/X11/bin
-export PATH=${PATH}:/usr/local/git/bin
-export PATH=${PATH}:/usr/local/share/dotnet
-export ANDROID_HOME=/usr/local/share/android-sdk
-export ANDROID_NDK_HOME=/usr/local/share/android-ndk
-export ANDROID_SDK_ROOT=/usr/local/share/android-sdk
-export PATH=${PATH}:${ANDROID_HOME}/tools
-export PATH=${PATH}:${ANDROID_HOME}/platform-tools
-export JAVA_HOME=/Library/Java/Home
 
 # Make vim the default editor.
 export EDITOR='vim';
