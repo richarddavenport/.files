@@ -167,6 +167,9 @@ alias bci='brew cask install '
 alias bcz='brew cask zap '
 alias bdump='brew bundle dump --global --force'
 
+# MakeMKV
+alias mkv='/Applications/MakeMKV.app/Contents/MacOS/makemkvcon'
+
 # ##############################################################################
 # antigen                                                                      #
 # ##############################################################################
@@ -205,17 +208,17 @@ alias bdump='brew bundle dump --global --force'
 source <(antibody init)
 # this block is in alphabetic order
 antibody bundle caarlos0/ports kind:path
-antibody bundle caarlos0/zsh-git-fetch-merge kind:path
-antibody bundle caarlos0/zsh-git-sync kind:path
-antibody bundle caarlos0/zsh-mkc
-antibody bundle caarlos0/zsh-open-pr kind:path
+# antibody bundle caarlos0/zsh-git-fetch-merge kind:path
+# antibody bundle caarlos0/zsh-git-sync kind:path
+# antibody bundle caarlos0/zsh-mkc
+# antibody bundle caarlos0/zsh-open-pr kind:path
 antibody bundle lukechilds/zsh-nvm
-antibody bundle mafredri/zsh-async
-antibody bundle rupa/z
+# antibody bundle mafredri/zsh-async
+# antibody bundle rupa/z
 antibody bundle zsh-users/zsh-completions
 antibody bundle zsh-users/zsh-autosuggestions
 # these should be at last!
-antibody bundle sindresorhus/pure
+# antibody bundle sindresorhus/pure
 antibody bundle zsh-users/zsh-syntax-highlighting
 
 antibody bundle denysdovhan/spaceship-prompt
@@ -226,36 +229,6 @@ antibody bundle denysdovhan/spaceship-prompt
 
 # Make vim the default editor.
 export EDITOR='vim';
-
-# Enable persistent REPL history for `node`.
-export NODE_REPL_HISTORY=~/.node_history;
-# Allow 32³ entries; the default is 1000.
-export NODE_REPL_HISTORY_SIZE='32768';
-# Use sloppy mode by default, matching web browsers.
-export NODE_REPL_MODE='sloppy';
-
-# Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
-export PYTHONIOENCODING='UTF-8';
-
-# Increase Bash history size. Allow 32³ entries; the default is 500.
-export HISTSIZE='32768';
-export HISTFILESIZE="${HISTSIZE}";
-# Omit duplicates and commands that begin with a space from history.
-export HISTCONTROL='ignoreboth';
-
-# Prefer US English and use UTF-8.
-export LANG='en_US.UTF-8';
-export LC_ALL='en_US.UTF-8';
-
-# Highlight section titles in manual pages.
-export LESS_TERMCAP_md="${yellow}";
-
-# Don’t clear the screen after quitting a manual page.
-export MANPAGER='less -X';
-
-# Avoid issues with `gpg` as installed via Homebrew.
-# https://stackoverflow.com/a/42265848/96656
-export GPG_TTY=$(tty);
 
 ###############################################################################
 # functions                                                                   #
@@ -459,6 +432,16 @@ function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
 
+function cpdvd () {
+    mkdir "/mkv/$1 - dvd"
+    makemkvcon mkv disc:0 all "/mkv/$1 - dvd"
+    eject /dev/cdrom
+}
+function cpbr () {
+    mkdir "/mkv/$1 - bluray"
+    makemkvcon mkv disc:0 all "/mkv/$1 - bluray"
+    eject /dev/cdrom
+}
 ###############################################################################
 # google cloud platform                                                       #
 ###############################################################################
