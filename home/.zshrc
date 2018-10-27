@@ -433,14 +433,12 @@ function tre() {
 }
 
 function cpdvd () {
-    mkdir "/mkv/$1 - dvd"
-    makemkvcon mkv disc:0 all "/mkv/$1 - dvd"
-    eject /dev/cdrom
+    mkdir "$1"
+    mkv mkv disc:0 all "$1 - dvd"
 }
 function cpbr () {
-    mkdir "/mkv/$1 - bluray"
-    makemkvcon mkv disc:0 all "/mkv/$1 - bluray"
-    eject /dev/cdrom
+    mkdir "$1"
+    mkv mkv disc:0 all "$1 - bluray"
 }
 ###############################################################################
 # google cloud platform                                                       #
