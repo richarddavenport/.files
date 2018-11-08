@@ -168,7 +168,7 @@ alias bcz='brew cask zap '
 alias bdump='brew bundle dump --global --force'
 
 # MakeMKV
-alias mkv='/Applications/MakeMKV.app/Contents/MacOS/makemkvcon'
+alias makemkvcon='/Applications/MakeMKV.app/Contents/MacOS/makemkvcon'
 
 # ##############################################################################
 # antigen                                                                      #
@@ -433,12 +433,12 @@ function tre() {
 }
 
 function cpdvd () {
-    mkdir "$1"
-    mkv mkv disc:0 all "$1 - dvd"
+    mkdir "$HOME/Movies/$1 - dvd"
+    makemkvcon mkv disc:0 all "$HOME/Movies/$1 - dvd"
 }
 function cpbr () {
-    mkdir "$1"
-    mkv mkv disc:0 all "$1 - bluray"
+    mkdir "$HOME/Movies/$1 - bluray"
+    makemkvcon mkv disc:0 all "$HOME/Movies/$1 - bluray"
 }
 ###############################################################################
 # google cloud platform                                                       #
