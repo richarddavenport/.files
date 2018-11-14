@@ -17,6 +17,7 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
+alias nom="npm"
 
 # Shortcuts
 alias dl="cd ~/Downloads"
@@ -433,13 +434,21 @@ function tre() {
 }
 
 function cpdvd () {
-    mkdir "$HOME/Movies/$1 - dvd"
-    makemkvcon mkv disc:0 all "$HOME/Movies/$1 - dvd"
+	TITLE="$1 - dvd"
+    mkdir $HOME/Movies/$TITLE
+    makemkvcon mkv disc:0 all $HOME/Movies/$TITLE
 }
+
 function cpbr () {
     mkdir "$HOME/Movies/$1 - bluray"
     makemkvcon mkv disc:0 all "$HOME/Movies/$1 - bluray"
 }
+
+# handbrakedvd "Shark Tale (2004)" title12
+function handbrakedvd () {
+	handbrakecli -Z "Very Fast 1080p30" -i "$HOME/Movies/$1 - dvd/$1 - dvd - $2.mkv" -o "$HOME/Movies/$1 - dvd/$1 - dvd - $2.m4v" --optimize --align-av --all-audio --subtitle scan -s 1,2,3,4,5
+}
+
 ###############################################################################
 # google cloud platform                                                       #
 ###############################################################################
