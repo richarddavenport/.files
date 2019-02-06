@@ -166,7 +166,7 @@ alias brs='brew search '
 alias bru='brew uninstall '
 alias bci='brew cask install '
 alias bcz='brew cask zap '
-alias bdump='brew bundle dump --global --force'
+alias brewdump='brew bundle dump --global --force'
 
 # MakeMKV
 alias makemkvcon='/Applications/MakeMKV.app/Contents/MacOS/makemkvcon'
@@ -227,6 +227,13 @@ antibody bundle denysdovhan/spaceship-prompt
 ###############################################################################
 # exports                                                                     #
 ###############################################################################
+
+# flutter
+export PATH=$PATH:$HOME/flutter/bin
+# android
+export PATH=$PATH:$HOME/Library/Android/sdk/platform-tools
+
+export PATH="$PATH:/home/linuxbrew/.linuxbrew/bin"
 
 # Make vim the default editor.
 export EDITOR='vim';
@@ -433,20 +440,70 @@ function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
 
+# cpdvd "SharkTale(2004)"
 function cpdvd () {
-	TITLE="$1 - dvd"
-    mkdir $HOME/Movies/$TITLE
-    makemkvcon mkv disc:0 all $HOME/Movies/$TITLE
+	cpdisc $1 dvd
 }
 
+# cpbr "SharkTale(2004)"
 function cpbr () {
-    mkdir "$HOME/Movies/$1 - bluray"
-    makemkvcon mkv disc:0 all "$HOME/Movies/$1 - bluray"
+	cpdisc $1 bluray
 }
 
-# handbrakedvd "Shark Tale (2004)" title12
-function handbrakedvd () {
-	handbrakecli -Z "Very Fast 1080p30" -i "$HOME/Movies/$1 - dvd/$1 - dvd - $2.mkv" -o "$HOME/Movies/$1 - dvd/$1 - dvd - $2.m4v" --optimize --align-av --all-audio --subtitle scan -s 1,2,3,4,5
+# cpdisc "SharkTale(2004)" dvd
+function cpdisc () {
+	name=$1
+	type=$2
+	root="$PWD/$name"
+	mkvfolder="$root/$type"
+	mkdir $root
+	mkdir $mkvfolder
+	mkmkv $mkvfolder
+	if [ $? -eq 0 ]; then
+		for mkv in ${mkvfolder}/*(.);
+		do
+			output="$root/${mkv:t:r}-$type.mp4"
+			mkmovie $mkv $output
+			if [ $? -eq 0 ]; then
+				rm $input
+			fi
+		done
+	fi
+	echo "All Done!"
+}
+
+# cpfolder "Shark Tale (2004)" dvd
+function cpfolder () {
+	name=$1
+	type=$2
+	root="$PWD/$name"
+	mkvfolder="$root/$type"
+	if [ $? -eq 0 ]; then
+		for mkv in ${mkvfolder}/*(.);
+		do
+			output="$root/${mkv:t:r}-$type.mp4"
+			mkmovie $mkv $output
+			if [ $? -eq 0 ]; then
+				rm $input
+			fi
+		done
+		rmdir $mkvfolder
+	fi
+	echo "All Done!"
+}
+
+# mkmkv location
+# location is the location to save the titles
+function mkmkv () {
+	location=$1
+	makemkvcon mkv disc:0 all $location
+}
+
+# mkmovie input output
+function mkmovie () {
+	input=$1
+	output=$2
+	handbrakecli -Z "Very Fast 1080p30" -i $input -o $output -O --align-av --all-audio -s scan,1,2,3,4,5,6,7,8,9
 }
 
 ###############################################################################
