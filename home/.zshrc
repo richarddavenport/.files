@@ -453,8 +453,11 @@ function cpbr () {
 # cpdisc "SharkTale(2004)" dvd
 function cpdisc () {
 	name=$1
+	echo "Name of movie: $name"
 	type=$2
+	echo "Type of movie: $type"
 	root="$PWD/$name"
+	echo "Root folder: $root"
 	mkvfolder="$root/$type"
 	mkdir $root
 	mkdir $mkvfolder
@@ -462,32 +465,14 @@ function cpdisc () {
 	if [ $? -eq 0 ]; then
 		for mkv in ${mkvfolder}/*(.);
 		do
-			output="$root/${mkv:t:r}-$type.mp4"
+			output="$root/${mkv:t:r}-$type.mkv"
 			mkmovie $mkv $output
 			if [ $? -eq 0 ]; then
+				echo "Removing $input..."
 				rm $input
 			fi
 		done
-	fi
-	echo "All Done!"
-}
-
-# cpfolder "Shark Tale (2004)" dvd
-function cpfolder () {
-	name=$1
-	type=$2
-	root="$PWD/$name"
-	mkvfolder="$root/$type"
-	if [ $? -eq 0 ]; then
-		for mkv in ${mkvfolder}/*(.);
-		do
-			output="$root/${mkv:t:r}-$type.mp4"
-			mkmovie $mkv $output
-			if [ $? -eq 0 ]; then
-				rm $input
-			fi
-		done
-		rmdir $mkvfolder
+		rm -d $mkvfolder
 	fi
 	echo "All Done!"
 }
@@ -495,15 +480,22 @@ function cpfolder () {
 # mkmkv location
 # location is the location to save the titles
 function mkmkv () {
+	echo "Starting MakeMKV..."
 	location=$1
+	echo "MakeMKV location: $location"
+	echo "MakeMKV command: makemkvcon mkv disc:0 all $location"
 	makemkvcon mkv disc:0 all $location
+	drutil tray eject
+	echo "Success!"
 }
 
 # mkmovie input output
 function mkmovie () {
 	input=$1
 	output=$2
-	handbrakecli -Z "Very Fast 1080p30" -i $input -o $output -O --align-av --all-audio -s scan,1,2,3,4,5,6,7,8,9
+	echo "Starting HandBrake..."
+	echo "HandBrake command: handbrakecli --preset "Very Fast 1080p30" --input $input --output $output --format av_mkv --align-av --all-audio --subtitle scan,1,2,3,4,5,6,7,8,9 --subtitle-forced --subtitle-burned"
+	handbrakecli --preset "Very Fast 1080p30" --input $input --output $output --format av_mkv --align-av --all-audio --subtitle scan,1,2,3,4,5,6,7,8,9 --subtitle-forced --subtitle-burned
 }
 
 ###############################################################################
