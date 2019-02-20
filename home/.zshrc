@@ -171,6 +171,8 @@ alias brewdump='brew bundle dump --global --force'
 # MakeMKV
 alias makemkvcon='/Applications/MakeMKV.app/Contents/MacOS/makemkvcon'
 
+alias cp2rad='rsync -avzhe ssh --progress --remove-source-files --exclude=".*" ~/Movies/movies rad:/zcool/media'
+
 # ##############################################################################
 # antigen                                                                      #
 # ##############################################################################
@@ -207,22 +209,22 @@ alias makemkvcon='/Applications/MakeMKV.app/Contents/MacOS/makemkvcon'
 # ##############################################################################
 
 source <(antibody init)
+antibody bundle denysdovhan/spaceship-prompt
 # this block is in alphabetic order
-antibody bundle caarlos0/ports kind:path
+# antibody bundle caarlos0/ports kind:path
 # antibody bundle caarlos0/zsh-git-fetch-merge kind:path
 # antibody bundle caarlos0/zsh-git-sync kind:path
 # antibody bundle caarlos0/zsh-mkc
 # antibody bundle caarlos0/zsh-open-pr kind:path
-antibody bundle lukechilds/zsh-nvm
+# antibody bundle lukechilds/zsh-nvm
 # antibody bundle mafredri/zsh-async
 # antibody bundle rupa/z
-antibody bundle zsh-users/zsh-completions
-antibody bundle zsh-users/zsh-autosuggestions
+# antibody bundle zsh-users/zsh-completions
+# antibody bundle zsh-users/zsh-autosuggestions
 # these should be at last!
 # antibody bundle sindresorhus/pure
 antibody bundle zsh-users/zsh-syntax-highlighting
 
-antibody bundle denysdovhan/spaceship-prompt
 
 ###############################################################################
 # exports                                                                     #
@@ -237,6 +239,11 @@ export PATH="$PATH:/home/linuxbrew/.linuxbrew/bin"
 
 # Make vim the default editor.
 export EDITOR='vim';
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 
 ###############################################################################
 # functions                                                                   #
@@ -440,17 +447,17 @@ function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
 
-# cpdvd "SharkTale(2004)"
+# cpdvd "SharkTale(2004)" drive 0=dvd 1=br
 function cpdvd () {
-	cpdisc $1 dvd
+	cpdisc $1 dvd $2
 }
 
 # cpbr "SharkTale(2004)"
 function cpbr () {
-	cpdisc $1 bluray
+	cpdisc $1 bluray 1
 }
 
-# cpdisc "SharkTale(2004)" dvd
+# cpdisc "SharkTale(2004)" dvd drive 0=dvd 1=br
 function cpdisc () {
 	name=$1
 	echo "Name of movie: $name"
@@ -461,7 +468,7 @@ function cpdisc () {
 	mkvfolder="$root/$type"
 	mkdir $root
 	mkdir $mkvfolder
-	mkmkv $mkvfolder
+	mkmkv $mkvfolder $3
 	if [ $? -eq 0 ]; then
 		for mkv in ${mkvfolder}/*(.);
 		do
@@ -477,15 +484,14 @@ function cpdisc () {
 	echo "All Done!"
 }
 
-# mkmkv location
+# mkmkv location drive 0=dvd 1=br
 # location is the location to save the titles
 function mkmkv () {
 	echo "Starting MakeMKV..."
 	location=$1
 	echo "MakeMKV location: $location"
-	echo "MakeMKV command: makemkvcon mkv disc:0 all $location"
-	makemkvcon mkv disc:0 all $location
-	drutil tray eject
+	echo "MakeMKV command: makemkvcon mkv disc:$2 all $location"
+	makemkvcon mkv disc:$2 all $location
 	echo "Success!"
 }
 
