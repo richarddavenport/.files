@@ -1,5 +1,7 @@
 #! /usr/bin/env zsh
 
+# zmodload zsh/zprof
+
 # Good reference for sharing .zshrc xplat
 # https://unix.stackexchange.com/a/273658/308086
 
@@ -79,14 +81,18 @@ alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
 # Clean up LaunchServices to remove duplicates in the “Open With” menu
 alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
 
+# TODO: why are commands slow? These are adding ~1sec startup time
 # Canonical hex dump; some systems have this symlinked
-command -v hd > /dev/null || alias hd="hexdump -C"
+# command -v hd > /dev/null || alias hd="hexdump -C"
 
 # macOS has no `md5sum`, so use `md5` as a fallback
-command -v md5sum > /dev/null || alias md5sum="md5"
+# command -v md5sum > /dev/null || alias md5sum="md5"
 
 # macOS has no `sha1sum`, so use `shasum` as a fallback
-command -v sha1sum > /dev/null || alias sha1sum="shasum"
+# command -v sha1sum > /dev/null || alias sha1sum="shasum"
+
+# Make Grunt print stack traces by default
+# command -v grunt > /dev/null && alias grunt="grunt --stack"
 
 # JavaScriptCore REPL
 jscbin="/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc";
@@ -140,9 +146,6 @@ for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
 	alias "${method}"="lwp-request -m '${method}'"
 done
 
-# Make Grunt print stack traces by default
-command -v grunt > /dev/null && alias grunt="grunt --stack"
-
 # Stuff I never really use but cannot delete either because of http://xkcd.com/530/
 alias stfu="osascript -e 'set volume output muted true'"
 alias pumpitup="osascript -e 'set volume output volume 100'"
@@ -171,7 +174,7 @@ alias brewdump='brew bundle dump --global --force'
 # MakeMKV
 alias makemkvcon='/Applications/MakeMKV.app/Contents/MacOS/makemkvcon'
 
-alias cp2rad='rsync -avzhe ssh --progress --remove-source-files --exclude=".*" ~/Movies/movies rad:/zcool/media'
+alias cp2rad='rsync -avzhe ssh --progress --exclude=".*" ~/Movies/movies rad:/zcool/media'
 
 # ##############################################################################
 # antigen                                                                      #
@@ -241,7 +244,7 @@ export PATH="$PATH:/home/linuxbrew/.linuxbrew/bin"
 export EDITOR='vim';
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 
@@ -308,12 +311,12 @@ function fs() {
 }
 
 # Use Git’s colored diff when available
-hash git &>/dev/null;
-if [ $? -eq 0 ]; then
-	function diff() {
-		git diff --no-index --color-words "$@";
-	}
-fi;
+# hash git &>/dev/null;
+# if [ $? -eq 0 ]; then
+# 	function diff() {
+# 		git diff --no-index --color-words "$@";
+# 	}
+# fi;
 
 # Create a data URL from a file
 function dataurl() {
@@ -447,17 +450,17 @@ function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
 
-# cpdvd "SharkTale(2004)" drive 0=dvd 1=br
+# cpdvd "SharkTale(2004)" drive from drutil list (- 1)
 function cpdvd () {
 	cpdisc $1 dvd $2
 }
 
-# cpbr "SharkTale(2004)"
+# cpbr "SharkTale(2004)" drive from drutil list (- 1)
 function cpbr () {
-	cpdisc $1 bluray 1
+	cpdisc $1 bluray $2
 }
 
-# cpdisc "SharkTale(2004)" dvd drive 0=dvd 1=br
+# cpdisc "SharkTale(2004)" drive from drutil list (- 1)
 function cpdisc () {
 	name=$1
 	echo "Name of movie: $name"
@@ -487,11 +490,13 @@ function cpdisc () {
 # mkmkv location drive 0=dvd 1=br
 # location is the location to save the titles
 function mkmkv () {
+	let "drive = $2 + 1"
 	echo "Starting MakeMKV..."
 	location=$1
 	echo "MakeMKV location: $location"
 	echo "MakeMKV command: makemkvcon mkv disc:$2 all $location"
 	makemkvcon mkv disc:$2 all $location
+	drutil -drive $drive tray eject
 	echo "Success!"
 }
 
@@ -508,5 +513,15 @@ function mkmovie () {
 # google cloud platform                                                       #
 ###############################################################################
 
-source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
-source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+# source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
+# source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+
+# autoload -Uz compinit
+
+# for dump in ~/.zcompdump(N.mh+24); do
+#   compinit
+# done
+
+# compinit -C
+
+# zprof
