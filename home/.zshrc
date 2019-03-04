@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 
-# zmodload zsh/zprof
+zmodload zsh/zprof
 
 # Good reference for sharing .zshrc xplat
 # https://unix.stackexchange.com/a/273658/308086
@@ -222,8 +222,8 @@ antibody bundle denysdovhan/spaceship-prompt
 # antibody bundle lukechilds/zsh-nvm
 # antibody bundle mafredri/zsh-async
 # antibody bundle rupa/z
-# antibody bundle zsh-users/zsh-completions
-# antibody bundle zsh-users/zsh-autosuggestions
+antibody bundle zsh-users/zsh-completions
+antibody bundle zsh-users/zsh-autosuggestions
 # these should be at last!
 # antibody bundle sindresorhus/pure
 antibody bundle zsh-users/zsh-syntax-highlighting
@@ -515,34 +515,34 @@ function mkmovie () {
 # source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
 # source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
 
-# autoload -Uz compinit
+autoload -Uz compinit
 
-# for dump in ~/.zcompdump(N.mh+24); do
-#   compinit
-# done
+for dump in ~/.zcompdump(N.mh+24); do
+  compinit
+done
 
-# compinit -C
+compinit -C
 
-# zprof
+zprof
 
 # Auto load .nvmrc
-autoload -U add-zsh-hook
-load-nvmrc() {
-  local node_version="$(nvm version)"
-  local nvmrc_path="$(nvm_find_nvmrc)"
+# autoload -U add-zsh-hook
+# load-nvmrc() {
+#   local node_version="$(nvm version)"
+#   local nvmrc_path="$(nvm_find_nvmrc)"
 
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+#   if [ -n "$nvmrc_path" ]; then
+#     local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
 
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$node_version" ]; then
-      nvm use
-    fi
-  elif [ "$node_version" != "$(nvm version default)" ]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
-}
-add-zsh-hook chpwd load-nvmrc
-load-nvmrc
+#     if [ "$nvmrc_node_version" = "N/A" ]; then
+#       nvm install
+#     elif [ "$nvmrc_node_version" != "$node_version" ]; then
+#       nvm use
+#     fi
+#   elif [ "$node_version" != "$(nvm version default)" ]; then
+#     echo "Reverting to nvm default version"
+#     nvm use default
+#   fi
+# }
+# add-zsh-hook chpwd load-nvmrc
+# load-nvmrc
