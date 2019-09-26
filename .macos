@@ -19,45 +19,444 @@ sudo xcode-select --install
 echo "Updating macOS..."
 sudo softwareupdate -i -a
 
-echo "  › Enable text replacement almost everywhere"
+echo "  > Enable text replacement almost everywhere"
 defaults write -g WebAutomaticTextReplacementEnabled -bool true
 
-echo "  › Turn off keyboard illumination when computer is not used for 5 minutes"
+echo "  > Turn off keyboard illumination when computer is not used for 5 minutes"
 defaults write com.apple.BezelServices kDimTime -int 300
 
-echo "  › Disable auto-correct"
-defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
-
-echo "  › Set up trackpad & mouse speed to a reasonable number"
+echo "  > Set up trackpad & mouse speed to a reasonable number"
 defaults write -g com.apple.trackpad.scaling 2
 defaults write -g com.apple.mouse.scaling 2.5
 
-echo "  › Avoid the creation of .DS_Store files on network volumes"
+echo "  > Avoid the creation of .DS_Store files on network volumes"
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 
-echo "  › Disable the 'Are you sure you want to open this application?' dialog"
+echo "  > Disable the 'Are you sure you want to open this application?' dialog"
 defaults write com.apple.LaunchServices LSQuarantine -bool false
 
-echo "  › Set dark interface style"
+echo "  > Set dark interface style"
 defaults write NSGlobalDomain AppleInterfaceStyle -string "Dark"
 
-echo "  › Set graphite appearance"
-defaults write NSGlobalDomain AppleAquaColorVariant -int 6
+echo "  > Set highlight color to green"
+defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.568600"
 
-echo "  › Set graphite highlight color"
-defaults write NSGlobalDomain AppleHighlightColor -string "0.847059 0.847059 0.862745"
-
-echo "  › Show battery percent"
+echo "  > Show battery percent"
 defaults write com.apple.menuextra.battery ShowPercent -bool true
 
-echo "  › Speed up wake from sleep to 24 hours from an hour"
+echo "  > Speed up wake from sleep to 24 hours from an hour"
 # http://www.cultofmac.com/221392/quick-hack-speeds-up-retina-macbooks-wake-from-sleep-os-x-tips/
 sudo pmset -a standbydelay 86400
 
-echo "  › Removing duplicates in the 'Open With' menu"
+echo "  > Removing duplicates in the 'Open With' menu"
 /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister \
 	-kill -r -domain local -domain system -domain user
 
+echo "  > Set computer name (as done via System Preferences → Sharing)"
+sudo scutil --set ComputerName "US102774MAC"
+sudo scutil --set HostName "US102774MAC"
+sudo scutil --set LocalHostName "US102774MAC"
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "US102774MAC"
+
+echo "  > Set standby delay to 24 hours (default is 1 hour)"
+sudo pmset -a standbydelay 86400
+
+echo "  > Disable the sound effects on boot"
+sudo nvram SystemAudioVolume=" "
+
+echo "  > Disable transparency in the menu bar and elsewhere on Yosemite"
+defaults write com.apple.universalaccess reduceTransparency -bool true
+
+echo "  > Set sidebar icon size to medium"
+defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 2
+
+echo "  > Always show scrollbars"
+# Possible values: `WhenScrolling`, `Automatic` and `Always`
+defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
+
+echo "  > Disable the over-the-top focus ring animation"
+defaults write NSGlobalDomain NSUseAnimatedFocusRing -bool false
+
+echo "  > Increase window resize speed for Cocoa applications"
+defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
+
+echo "  > Expand print panel by default"
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
+
+echo "  > Automatically quit printer app once the print jobs complete"
+defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
+
+echo "  > Disable the "Are you sure you want to open this application?" dialog"
+defaults write com.apple.LaunchServices LSQuarantine -bool false
+
+echo "  > Remove duplicates in the "Open With" menu (also see `lscleanup` alias)"
+/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user
+
+# echo "  > Disable Resume system-wide"
+# defaults write com.apple.systempreferences NSQuitAlwaysKeepsWindows -bool false
+
+echo "  > Disable automatic termination of inactive apps"
+defaults write NSGlobalDomain NSDisableAutomaticTermination -bool true
+
+echo "  > Disable the crash reporter"
+defaults write com.apple.CrashReporter DialogType -string "none"
+
+echo "  > Set Help Viewer windows to non-floating mode"
+defaults write com.apple.helpviewer DevMode -bool true
+
+echo "  > Reveal IP address, hostname, OS version, etc. when clicking the clock in the login window"
+sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
+
+echo "  > Restart automatically if the computer freezes"
+sudo systemsetup -setrestartfreeze on
+
+# echo "  > Never go into computer sleep mode"
+# sudo systemsetup -setcomputersleep Off > /dev/null
+
+# echo "  > Disable Notification Center and remove the menu bar icon"
+# launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist 2> /dev/null
+
+echo "  > Disable automatic capitalization as it’s annoying when typing code"
+defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+
+echo "  > Disable smart dashes as they’re annoying when typing code"
+defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+
+echo "  > Disable automatic period substitution as it’s annoying when typing code"
+defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+
+echo "  > Disable smart quotes as they’re annoying when typing code"
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+
+echo "  > Disable auto-correct"
+defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+
 echo ""
-echo "〉Activity Monitor:"
-echo "  〉Show the main window when launching Activity Monitor"
+echo "Activity Monitor:"
+echo "  > Show the main window when launching Activity Monitor"
+defaults write com.apple.ActivityMonitor OpenMainWindow -bool true
+
+echo "  > Visualize CPU usage in the Activity Monitor Dock icon"
+defaults write com.apple.ActivityMonitor IconType -int 5
+
+echo "  > Show all processes in Activity Monitor"
+defaults write com.apple.ActivityMonitor ShowCategory -int 0
+
+echo "  > Sort Activity Monitor results by CPU usage"
+defaults write com.apple.ActivityMonitor SortColumn -string "CPUUsage"
+defaults write com.apple.ActivityMonitor SortDirection -int 0
+
+echo "  > Killing Activity Monitor"
+killall "Activity Monitor" &> /dev/null
+
+echo ""
+echo "Mac App Store:"
+echo "  >  Enable the WebKit Developer Tools in the Mac App Store"
+defaults write com.apple.appstore WebKitDeveloperExtras -bool true
+
+echo "  >  Enable Debug Menu in the Mac App Store"
+defaults write com.apple.appstore ShowDebugMenu -bool true
+
+echo "  >  Enable the automatic update check"
+defaults write com.apple.SoftwareUpdate AutomaticCheckEnabled -bool true
+
+echo "  >  Check for software updates daily, not just once per week"
+defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
+
+echo "  >  Download newly available updates in background"
+defaults write com.apple.SoftwareUpdate AutomaticDownload -int 1
+
+echo "  >  Install System data files & security updates"
+defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
+
+echo "  >  Automatically download apps purchased on other Macs"
+defaults write com.apple.SoftwareUpdate ConfigDataInstall -int 1
+
+echo "  >  Turn on app auto-update"
+defaults write com.apple.commerce AutoUpdate -bool true
+
+echo "  >  Allow the App Store to reboot machine on macOS updates"
+defaults write com.apple.commerce AutoUpdateRestartRequired -bool true
+
+echo "  > Killing App Store"
+killall "App Store" &> /dev/null
+
+echo ""
+echo "Dock, Dashboard, and hot corners:"
+
+echo "  > Dark menu bar and dock"
+defaults write $HOME/Library/Preferences/.GlobalPreferences.plist AppleInterfaceTheme -string "Dark"
+
+echo "  > Enable highlight hover effect for the grid view of a stack (Dock)"
+defaults write com.apple.dock mouse-over-hilite-stack -bool true
+
+echo "  > Set the icon size of Dock items to 36 pixels"
+defaults write com.apple.dock tilesize -int 36
+
+echo "  > Change minimize/maximize window effect"
+defaults write com.apple.dock mineffect -string "scale"
+
+echo "  > Minimize windows into their application’s icon"
+defaults write com.apple.dock minimize-to-application -bool true
+
+echo "  > Enable spring loading for all Dock items"
+defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true
+
+echo "  > Show indicator lights for open applications in the Dock"
+defaults write com.apple.dock show-process-indicators -bool true
+
+echo "  > Don’t animate opening applications from the Dock"
+defaults write com.apple.dock launchanim -bool false
+
+echo "  > Speed up Mission Control animations"
+defaults write com.apple.dock expose-animation-duration -float 0.1
+
+echo "  > Disable Dashboard"
+defaults write com.apple.dashboard mcx-disabled -bool true
+
+echo "  > Don’t show Dashboard as a Space"
+defaults write com.apple.dock dashboard-in-overlay -bool true
+
+echo "  > Don’t automatically rearrange Spaces based on most recent use"
+defaults write com.apple.dock mru-spaces -bool false
+
+echo "  > Remove the auto-hiding Dock delay"
+defaults write com.apple.dock autohide-delay -float 0
+
+echo "  > Remove the animation when hiding/showing the Dock"
+defaults write com.apple.dock autohide-time-modifier -float 0
+
+echo "  > Automatically hide and show the Dock"
+defaults write com.apple.dock autohide -bool true
+
+echo "  > Position the Dock on the left of the screen"
+defaults write com.apple.dock orientation -string left
+
+echo "  > Make Dock icons of hidden applications translucent"
+defaults write com.apple.dock showhidden -bool true
+
+echo "  > Hot corners"
+# Possible values:
+#  0: no-op
+#  2: Mission Control
+#  3: Show application windows
+#  4: Desktop
+#  5: Start screen saver
+#  6: Disable screen saver
+#  7: Dashboard
+# 10: Put display to sleep
+# 11: Launchpad
+# 12: Notification Center
+echo "  > Top left screen corner → Mission Control"
+defaults write com.apple.dock wvous-tl-corner -int 2
+defaults write com.apple.dock wvous-tl-modifier -int 0
+
+echo "  > Top right screen corner → Desktop"
+defaults write com.apple.dock wvous-tr-corner -int 4
+defaults write com.apple.dock wvous-tr-modifier -int 0
+
+echo "  > Bottom right screen corner → Start screen saver"
+defaults write com.apple.dock wvous-br-corner -int 5
+defaults write com.apple.dock wvous-br-modifier -int 0
+
+echo "  > Killing Dock"
+killall "Dock" &> /dev/null
+
+echo ""
+echo "Finder:"
+echo "  > Always open everything in Finder's list view"
+defaults write com.apple.Finder FXPreferredViewStyle Nlsv
+
+echo "  > Set the Finder prefs for showing a few different volumes on the Desktop"
+defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
+defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
+
+echo "  > Expand save panel by default"
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+
+echo "  > Set sidebar icon size to small"
+defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 1
+
+echo "  > Show status bar"
+defaults write com.apple.finder ShowStatusBar -bool true
+
+echo "  > Show path bar"
+defaults write com.apple.finder ShowPathbar -bool true
+
+echo "  > Disable the warning before emptying the Trash"
+defaults write com.apple.finder WarnOnEmptyTrash -bool false
+
+echo "  > Save to disk by default, instead of iCloud"
+defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+
+echo "  > Display full POSIX path as Finder window title"
+defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+
+echo "  > Disable the warning when changing a file extension"
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+
+echo "  > Allow quitting via ⌘ + Q; doing so will also hide desktop icons"
+defaults write com.apple.finder QuitMenuItem -bool true
+
+echo "  > Disable window animations and Get Info animations"
+defaults write com.apple.finder DisableAllAnimations -bool true
+
+echo "  > Set $HOME as the default location for new Finder windows"
+defaults write com.apple.finder NewWindowTarget -string "PfDe"
+defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/"
+
+echo "  > Show icons for hard drives, servers, and removable media on the desktop"
+defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
+defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true
+defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
+defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
+
+echo "  > show hidden files by default"
+#defaults write com.apple.finder AppleShowAllFiles -bool true
+
+echo "  > show all filename extensions"
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+echo "  > show status bar"
+defaults write com.apple.finder ShowStatusBar -bool true
+
+echo "  > show path bar"
+defaults write com.apple.finder ShowPathbar -bool true
+
+echo "  > Display full POSIX path as Finder window title"
+defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+
+echo "  > Keep folders on top when sorting by name"
+defaults write com.apple.finder _FXSortFoldersFirst -bool true
+
+echo "  > When performing a search, search the current folder by default"
+defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+
+echo "  > Disable the warning when changing a file extension"
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+
+echo "  > Enable spring loading for directories"
+defaults write NSGlobalDomain com.apple.springing.enabled -bool true
+
+echo "  > Remove the spring loading delay for directories"
+defaults write NSGlobalDomain com.apple.springing.delay -float 0
+
+echo "  > Avoid creating .DS_Store files on network or USB volumes"
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+
+echo "  > Disable disk image verification"
+defaults write com.apple.frameworks.diskimages skip-verify -bool true
+defaults write com.apple.frameworks.diskimages skip-verify-locked -bool true
+defaults write com.apple.frameworks.diskimages skip-verify-remote -bool true
+
+echo "  > Automatically open a new Finder window when a volume is mounted"
+defaults write com.apple.frameworks.diskimages auto-open-ro-root -bool true
+defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
+defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
+
+echo "  > Show item info near icons on the desktop and in other icon views"
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
+
+echo "  > Show item info to the right of the icons on the desktop"
+/usr/libexec/PlistBuddy -c "Set DesktopViewSettings:IconViewSettings:labelOnBottom false" ~/Library/Preferences/com.apple.finder.plist
+
+echo "  > Enable snap-to-grid for icons on the desktop and in other icon views"
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+
+echo "  > Increase grid spacing for icons on the desktop and in other icon views"
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
+
+echo "  > Increase the size of icons on the desktop and in other icon views"
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
+
+echo "  > Use list view in all Finder windows by default"
+# Four-letter codes for the other view modes: `icnv`, `clmv`, `Flwv`
+defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
+
+echo "  > Show the ~/Library folder"
+chflags nohidden ~/Library
+
+echo "  > Show the /Volumes folder"
+sudo chflags nohidden /Volumes
+
+echo "  > Expand the following File Info panes:"
+# "General", "Open with", and "Sharing & Permissions
+defaults write com.apple.finder FXInfoPanesExpanded -dict \
+	General -bool true \
+	OpenWith -bool true \
+	Privileges -bool true
+
+# TODO: Need to figure out how to update
+# com.apple.finder StandardViewSettings ExtendedListViewSettings calculateAllSizes = 1
+
+echo "  > Killing Finder"
+killall "Finder" &> /dev/null
+
+echo ""
+echo "Trackpad, mouse, keyboard, and input:"
+
+echo "  > Trackpad: enable tap to click for this user and for the login screen"
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
+echo "  > Enable full keyboard access for all controls"
+# (e.g. enable Tab in modal dialogs)
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+
+echo "  > Use scroll gesture with the Ctrl (^) modifier key to zoom"
+defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
+defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144
+
+echo "  > Follow the keyboard focus while zoomed in"
+defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true
+
+echo "  > Disable press-and-hold for keys in favor of key repeat"
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+
+echo "  > Set a blazingly fast keyboard repeat rate"
+defaults write NSGlobalDomain KeyRepeat -int 1
+defaults write NSGlobalDomain InitialKeyRepeat -int 10
+
+echo "  > Set the timezone; see `sudo systemsetup -listtimezones` for other values"
+sudo systemsetup -settimezone "America/Chicago" > /dev/null
+
+echo "  > Stop iTunes from responding to the keyboard media keys"
+launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
+
+echo ""
+echo "Screen:"
+echo "  > Require password 5 seconds after sleep or screen saver begins"
+defaults write com.apple.screensaver askForPassword -int 1
+defaults write com.apple.screensaver askForPasswordDelay -int 5
+
+echo "  > Save screenshots to the pictures directory"
+defaults write com.apple.screencapture location -string "${HOME}/Pictures/ScreenShots"
+
+echo "  > Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)"
+defaults write com.apple.screencapture type -string "png"
+
+echo "  > Enable subpixel font rendering on non-Apple LCDs"
+echo "  > Reference: https://github.com/kevinSuttle/macOS-Defaults/issues/17#issuecomment-266633501"
+defaults write NSGlobalDomain AppleFontSmoothing -int 1
+
+echo "  > Enable HiDPI display modes (requires restart)"
+sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
+
+echo "  > Prevent Time Machine from prompting to use new hard drives as backup volume"
+defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
+
+echo "  > Disable local Time Machine backups"
+hash tmutil &> /dev/null && sudo tmutil disablelocal
+
+echo "Done with .macOS script..."
