@@ -1,2 +1,0 @@
-SAVEHIST=500
-HISTFILE=~/.zsh_history
