@@ -152,8 +152,8 @@
 	# Automatically correct and execute mistyped commands
 	autocorrect = 1
 
-[includeIf "gitdir:~/code/work/"]
-  path = .gitconfig-work
+# [includeIf "gitdir:~/code/work/"]
+#   path = .gitconfig-work
 
 [merge]
 
@@ -170,7 +170,7 @@
 	followTags = true
 
 [user]
-	email = rad22684@gmail.com
+	email = richard.davenport@mbpnetwork.com
 	name = Richard Davenport
 
 # URL shorthands
