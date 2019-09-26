@@ -1,5 +1,10 @@
 #! /usr/bin/env zsh
 
+# TODO
+# create setup for .zsh
+# create setup for mac applications (brew, mas)
+# create setup for mac configurations
+
 # Check for Homebrew and install if we don't have it
 if ! type "brew" > /dev/null; then
   case `uname` in

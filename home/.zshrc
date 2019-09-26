@@ -214,13 +214,22 @@ antibody bundle caarlos0/ports kind:path
 # antibody bundle caarlos0/zsh-mkc
 # antibody bundle caarlos0/zsh-open-pr kind:path
 antibody bundle lukechilds/zsh-nvm
+export NVM_DIR="/home/richard/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
 # antibody bundle mafredri/zsh-async
 # antibody bundle rupa/z
+
 antibody bundle zsh-users/zsh-completions
+fpath=(/usr/local/share/zsh-completions $fpath)
+
 antibody bundle zsh-users/zsh-autosuggestions
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 # these should be at last!
 # antibody bundle sindresorhus/pure
 antibody bundle zsh-users/zsh-syntax-highlighting
+antibody bundle zsh-users/zsh-history-substring-search
 
 antibody bundle denysdovhan/spaceship-prompt
 
@@ -522,12 +531,6 @@ function showsshkey () {
 	cat < ~/.ssh/id_rsa.pub
 }
 
-source <(antibody init)
-antibody bundle zsh-users/zsh-completions
-antibody bundle zsh-users/zsh-syntax-highlighting
-antibody bundle zsh-users/zsh-history-substring-search
-antibody bundle denysdovhan/spaceship-prompt
-
 ## History wrapper
 function zsh_history {
   local clear list
@@ -575,7 +578,3 @@ zstyle :compinstall filename '/home/richard/.zshrc'
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
-
-export NVM_DIR="/home/richard/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
