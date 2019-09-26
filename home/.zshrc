@@ -18,17 +18,17 @@ antibody bundle caarlos0/ports kind:path
 # antibody bundle caarlos0/zsh-mkc
 # antibody bundle caarlos0/zsh-open-pr kind:path
 antibody bundle lukechilds/zsh-nvm
-export NVM_DIR="/home/richard/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+# export NVM_DIR="/home/richard/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 # antibody bundle mafredri/zsh-async
 # antibody bundle rupa/z
 
 antibody bundle zsh-users/zsh-completions
-fpath=(/usr/local/share/zsh-completions $fpath)
+# fpath=(/usr/local/share/zsh-completions $fpath)
 
 antibody bundle zsh-users/zsh-autosuggestions
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # these should be at last!
 # antibody bundle sindresorhus/pure
