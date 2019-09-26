@@ -382,3 +382,5 @@ zstyle :compinstall filename '/home/richard/.zshrc'
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
+
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
