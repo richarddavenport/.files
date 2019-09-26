@@ -53,10 +53,10 @@ echo "  > Removing duplicates in the 'Open With' menu"
 	-kill -r -domain local -domain system -domain user
 
 echo "  > Set computer name (as done via System Preferences → Sharing)"
-sudo scutil --set ComputerName "US102774MAC"
-sudo scutil --set HostName "US102774MAC"
-sudo scutil --set LocalHostName "US102774MAC"
-sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "US102774MAC"
+sudo scutil --set ComputerName "RADBOOK"
+sudo scutil --set HostName "RADBOOK"
+sudo scutil --set LocalHostName "RADBOOK"
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "RADBOOK"
 
 echo "  > Set standby delay to 24 hours (default is 1 hour)"
 sudo pmset -a standbydelay 86400
