@@ -10,6 +10,9 @@ function showsshkey () {
 	cat < ~/.ssh/id_rsa.pub
 }
 
+# TODO make this xplat -K is apple only
+ssh-add -K ~/.ssh/id_rsa
+
 source <(antibody init)
 # this block is in alphabetic order
 antibody bundle caarlos0/ports kind:path
