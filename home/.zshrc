@@ -2,6 +2,8 @@
 
 export PATH="$PATH:/home/linuxbrew/.linuxbrew"
 
+alias handbrakecli='HandBrakeCLI'
+
 function mksshkey () {
 	ssh-keygen -t rsa -C "rad22684@gmail.com"
 }
@@ -280,12 +282,7 @@ function cpdisc () {
 		do
 			output="$root/${mkv:t:r}-$type.mkv"
 			mkmovie $mkv $output
-			if [ $? -eq 0 ]; then
-				echo "Removing $input..."
-				rm $input
-			fi
 		done
-		rm -d $mkvfolder
 	fi
 	echo "All Done!"
 }
@@ -298,7 +295,6 @@ function mkmkv () {
 	echo "MakeMKV location: $location"
 	echo "MakeMKV command: makemkvcon mkv disc:0 all $location"
 	makemkvcon mkv disc:0 all $location
-	drutil tray eject
 	echo "Success!"
 }
 
@@ -309,6 +305,21 @@ function mkmovie () {
 	echo "Starting HandBrake..."
 	echo "HandBrake command: handbrakecli --preset "Very Fast 1080p30" --input $input --output $output --format av_mkv --align-av --all-audio --subtitle scan,1,2,3,4,5,6,7,8,9 --subtitle-forced --subtitle-burned"
 	handbrakecli --preset "Very Fast 1080p30" --input $input --output $output --format av_mkv --align-av --all-audio --subtitle scan,1,2,3,4,5,6,7,8,9 --subtitle-forced --subtitle-burned
+}
+
+function compress () {
+	bluray="$PWD/bluray"
+	compressed="$PWD/compressed"
+	echo "compressed folder: $compressed"
+	mkdir $compressed
+	if [ $? -eq 0 ]; then
+		for mkv in ${bluray}/*(.);
+		do
+			output="$compressed/${mkv:t:r}-1080p.mkv"
+			mkmovie $mkv $output
+		done
+	fi
+	echo "All Done!"
 }
 
 ###############################################################################
