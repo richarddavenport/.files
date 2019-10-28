@@ -41,20 +41,6 @@ antibody bundle zsh-users/zsh-history-substring-search
 antibody bundle denysdovhan/spaceship-prompt
 
 ###############################################################################
-# exports                                                                     #
-###############################################################################
-
-# flutter
-export PATH=$PATH:$HOME/flutter/bin
-# android
-export PATH=$PATH:$HOME/Library/Android/sdk/platform-tools
-
-export PATH="$PATH:/home/linuxbrew/.linuxbrew/bin"
-
-# Make vim the default editor.
-export EDITOR='vim';
-
-###############################################################################
 # functions                                                                   #
 ###############################################################################
 
@@ -322,6 +308,20 @@ source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.in
 source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
 
 
+###############################################################################
+# exports                                                                     #
+###############################################################################
+
+# flutter
+export PATH=$PATH:$HOME/flutter/bin
+# android
+export PATH=$PATH:$HOME/Library/Android/sdk/platform-tools
+
+export PATH="$PATH:/home/linuxbrew/.linuxbrew/bin"
+
+# Make vim the default editor.
+export EDITOR='vim';
+
 export PATH="$PATH:/home/linuxbrew/.linuxbrew"
 export GOROOT=/usr/local/go
 export PATH=$GOROOT/bin:$PATH
@@ -329,6 +329,9 @@ export ANDROID_HOME=$HOME/Android/Sdk
 export PATH="$PATH:$HOME/development/flutter/bin"
 export PATH="$PATH:$ANDROID_HOME/tools"
 export PATH="$PATH:$ANDROID_HOME/platform-tools"
+
+export DOTNET_HOME=$HOME/.dotnet
+export PATH=$PATH:$DOTNET_HOME/tools
 
 function mksshkey () {
 	ssh-keygen -t rsa -C "rad22684@gmail.com"

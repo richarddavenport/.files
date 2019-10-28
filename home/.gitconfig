@@ -87,7 +87,7 @@
 [core]
 
 	# Use custom `.gitignore` and `.gitattributes`
-	excludesfile = ~/.gitignore
+	excludesfile = /Users/richardd/.gitignore
 	attributesfile = ~/.gitattributes
 
 	# Treat spaces before tabs and all kinds of trailing whitespace as an error
@@ -133,6 +133,7 @@
 	untracked = cyan
 
 [commit]
+	template = /Users/richardd/.stCommitMsg
 
 	# https://help.github.com/articles/signing-commits-using-gpg/
 	# gpgsign = true
