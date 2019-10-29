@@ -12,6 +12,10 @@ function showsshkey () {
 	cat < ~/.ssh/id_rsa.pub
 }
 
+function killport() {
+	lsof -i TCP:$1 | grep LISTEN | awk '{print $2}' | xargs kill -9
+}
+
 # TODO make this xplat -K is apple only
 ssh-add -K ~/.ssh/id_rsa
 
