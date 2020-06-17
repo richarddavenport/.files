@@ -1,5 +1,52 @@
 #! /usr/bin/env zsh
 
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+DOT_FILES='~/.files'
+
+## History file configuration
+[ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=10000
+
+setopt extended_history       # record timestamp of command in HISTFILE
+setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt hist_ignore_dups       # ignore duplicated commands history list
+setopt hist_ignore_space      # ignore commands that start with space
+setopt hist_verify            # show command with history expansion to user before running it
+setopt inc_append_history     # add commands to HISTFILE in order of execution
+setopt share_history          # share command history data
+
+alias history='zsh_history -f'
+
+# The following lines were added by compinstall
+zstyle :compinstall filename '/home/richard/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
+
+source "$DOT_FILES/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "$DOT_FILES/zsh/powerlevel10k/powerlevel10k.zsh-theme"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Load the shell dotfiles, and then some:
+# * ~/.path can be used to extend `$PATH`.
+# * ~/.extra can be used for other settings you don’t want to commit.
+for file in ~/.{path,bash_prompt,exports,aliases,functions,extra}; do
+	[ -r "$file" ] && [ -f "$file" ] && source "$file";
+done;
+unset file;
+
 export PATH="$PATH:/home/linuxbrew/.linuxbrew"
 
 alias handbrakecli='HandBrakeCLI'
@@ -17,34 +64,34 @@ function killport() {
 }
 
 # TODO make this xplat -K is apple only
-ssh-add -K ~/.ssh/id_rsa
+# ssh-add -K ~/.ssh/id_rsa
 
-source <(antibody init)
-# this block is in alphabetic order
-antibody bundle caarlos0/ports kind:path
-# antibody bundle caarlos0/zsh-git-fetch-merge kind:path
-# antibody bundle caarlos0/zsh-git-sync kind:path
-# antibody bundle caarlos0/zsh-mkc
-# antibody bundle caarlos0/zsh-open-pr kind:path
-antibody bundle lukechilds/zsh-nvm
-# export NVM_DIR="/home/richard/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+# source <(antibody init)
+# # this block is in alphabetic order
+# antibody bundle caarlos0/ports kind:path
+# # antibody bundle caarlos0/zsh-git-fetch-merge kind:path
+# # antibody bundle caarlos0/zsh-git-sync kind:path
+# # antibody bundle caarlos0/zsh-mkc
+# # antibody bundle caarlos0/zsh-open-pr kind:path
+# antibody bundle lukechilds/zsh-nvm
+# # export NVM_DIR="/home/richard/.nvm"
+# # [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
-# antibody bundle mafredri/zsh-async
-# antibody bundle rupa/z
+# # antibody bundle mafredri/zsh-async
+# # antibody bundle rupa/z
 
-antibody bundle zsh-users/zsh-completions
-# fpath=(/usr/local/share/zsh-completions $fpath)
+# antibody bundle zsh-users/zsh-completions
+# # fpath=(/usr/local/share/zsh-completions $fpath)
 
-antibody bundle zsh-users/zsh-autosuggestions
-# source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# antibody bundle zsh-users/zsh-autosuggestions
+# # source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-# these should be at last!
-# antibody bundle sindresorhus/pure
-antibody bundle zsh-users/zsh-syntax-highlighting
-antibody bundle zsh-users/zsh-history-substring-search
+# # these should be at last!
+# # antibody bundle sindresorhus/pure
+# # antibody bundle zsh-users/zsh-syntax-highlighting
+# antibody bundle zsh-users/zsh-history-substring-search
 
-antibody bundle denysdovhan/spaceship-prompt
+# antibody bundle denysdovhan/spaceship-prompt
 
 ###############################################################################
 # functions                                                                   #
@@ -355,53 +402,3 @@ function mksshkey () {
 function showsshkey () {
 	cat < ~/.ssh/id_rsa.pub
 }
-
-## History wrapper
-function zsh_history {
-  local clear list
-  zparseopts -E c=clear l=list
-
-  if [[ -n "$clear" ]]; then
-    # if -c provided, clobber the history file
-    echo -n >| "$HISTFILE"
-    echo >&2 History file deleted. Reload the session to see its effects.
-  elif [[ -n "$list" ]]; then
-    # if -l provided, run as if calling `fc' directly
-    builtin fc "$@"
-  else
-    # unless a number is provided, show all history events (starting from 1)
-    [[ ${@[-1]-} = *[0-9]* ]] && builtin fc -l "$@" || builtin fc -l "$@" 1
-  fi
-}
-
-# Timestamp format
-case ${HIST_STAMPS-} in
-  "mm/dd/yyyy") alias history='zsh_history -f' ;;
-  "dd.mm.yyyy") alias history='zsh_history -E' ;;
-  "yyyy-mm-dd") alias history='zsh_history -i' ;;
-  "") alias history='zsh_history' ;;
-  *) alias history="zsh_history -t '$HIST_STAMPS'" ;;
-esac
-
-## History file configuration
-[ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
-HISTSIZE=50000
-SAVEHIST=10000
-
-## History command configuration
-setopt extended_history       # record timestamp of command in HISTFILE
-setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
-setopt hist_ignore_dups       # ignore duplicated commands history list
-setopt hist_ignore_space      # ignore commands that start with space
-setopt hist_verify            # show command with history expansion to user before running it
-setopt inc_append_history     # add commands to HISTFILE in order of execution
-setopt share_history          # share command history data
-
-# The following lines were added by compinstall
-zstyle :compinstall filename '/home/richard/.zshrc'
-
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
-
-zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
