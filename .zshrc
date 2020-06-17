@@ -63,6 +63,31 @@ function killport() {
 	lsof -i TCP:$1 | grep LISTEN | awk '{print $2}' | xargs kill -9
 }
 
+function mountDrives() {
+	mount -t smbfs //richardd@mbpi-devportal.mbpi.local/c$ ~/mnt/mbpi-devportal/c$
+	mount -t smbfs //richardd@mbpi-portal.mbpi.local/c$ ~/mnt/mbpi-portal/c$
+}
+
+function unmountDrives() {
+	umount ~/mnt/mbpi-devportal/c$
+	umount ~/mnt/mbpi-portal/c$
+}
+
+# function mount_drive {
+#   mkdir -p $2
+#   mount_smbfs $1 $2 
+# }
+
+# drives_to_unmount=`df | awk '/mneedham@punedc02/ { print $6 }'`
+
+# if [ "$drives_to_unmount" != "" ]; then
+#   echo "Unmounting existing drives on punedc02: \n$drives_to_unmount"
+#   umount $drives_to_unmount
+# fi
+
+# mount_drive //mneedham@punedc02/media /Volumes/punedc02_media 
+# mount_drive //mneedham@punedc02/shared /Volumes/punedc02_shared
+
 # TODO make this xplat -K is apple only
 # ssh-add -K ~/.ssh/id_rsa
 
@@ -374,26 +399,28 @@ source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.
 # exports                                                                     #
 ###############################################################################
 
+# java
+export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
+
 # flutter
-export PATH=$PATH:$HOME/flutter/bin
+export PATH=$HOME/bin/flutter/bin:$PATH
+
 # android
-export PATH=$PATH:$HOME/Library/Android/sdk/platform-tools
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$ANDROID_HOME/emulator:$PATH
+export PATH=$ANDROID_HOME/tools:$PATH
+export PATH=$ANDROID_HOME/tools/bin:$PATH
+export PATH=$ANDROID_HOME/platform-tools:$PATH
 
 export PATH="$PATH:/home/linuxbrew/.linuxbrew/bin"
-
-# Make vim the default editor.
-export EDITOR='vim';
-
 export PATH="$PATH:/home/linuxbrew/.linuxbrew"
-export GOROOT=/usr/local/go
-export PATH=$GOROOT/bin:$PATH
-export ANDROID_HOME=$HOME/Android/Sdk
-export PATH="$PATH:$HOME/development/flutter/bin"
-export PATH="$PATH:$ANDROID_HOME/tools"
-export PATH="$PATH:$ANDROID_HOME/platform-tools"
 
+# dotnet
 export DOTNET_HOME=$HOME/.dotnet
-export PATH=$PATH:$DOTNET_HOME/tools
+export PATH=$DOTNET_HOME/tools:$PATH
+
+export DOCKER_BUILDKIT=1
+export MBP_REPOS=$HOME/Projects/MBP
 
 function mksshkey () {
 	ssh-keygen -t rsa -C "rad22684@gmail.com"
