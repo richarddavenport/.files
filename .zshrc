@@ -423,6 +423,16 @@ export PATH=$DOTNET_HOME/tools:$PATH
 export DOCKER_BUILDKIT=1
 export MBP_REPOS=$HOME/Projects/MBP
 
+export GOOGLE_APPLICATION_CREDENTIALS=$HOME/Development/mbp-tickets.json
+
+# ruby (homebrew)
+export PATH="/usr/local/opt/ruby/bin:$PATH"
+export PATH="/usr/local/lib/ruby/gems/3.0.0/bin:$PATH"
+export PATH="/Users/richardd/.local/share/gem/ruby/3.0.0/bin:$PATH"
+export LDFLAGS="-L/usr/local/opt/ruby/lib"
+export CPPFLAGS="-I/usr/local/opt/ruby/include"
+export PKG_CONFIG_PATH="/usr/local/opt/ruby/lib/pkgconfig"
+
 function mksshkey () {
 	ssh-keygen -t rsa -C "rad22684@gmail.com"
 }
